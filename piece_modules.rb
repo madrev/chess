@@ -25,6 +25,15 @@ end
 module SteppingPiece
 
   def moves(start_pos)
+    result = []
+    move_diffs.each do |diff|
+      new_pos = add_diff(start_pos, diff)
+      at_pos = board[new_pos]
+      if @board.in_bounds?(new_pos) && at_pos.color != self.color
+        result << new_pos 
+      end
+    end
+    result
   end
 
 end
@@ -80,6 +89,11 @@ class Knight < Piece
     @symbol = "N"
   end
 
+  def move_diffs
+    [[-2, 1], [-2, -1], [2, 1], [2, -1], [1, -2], [1, 2], [-1, -2], [-1, 2]]
+  end
+
+
 end
 
 class King < Piece
@@ -88,6 +102,10 @@ class King < Piece
   def initialize(color, board)
     super
     @symbol = "K"
+  end
+
+  def move_diffs
+    [[1, 1], [1, -1], [-1, 1], [-1, -1], [0, 1], [0, -1], [1, 0], [-1, 0]]
   end
 
 end
