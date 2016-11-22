@@ -8,6 +8,7 @@ class Board
   def initialize
     @grid = Array.new(8) { Array.new(8) }
     populate_grid
+    update_positions
   end
 
   def [](pos)
@@ -41,7 +42,10 @@ class Board
     pos.is_a?(Array) && pos.all? { |x| (0..7).cover?(x) }
   end
 
-  private
+  def in_check?(color)
+  end
+
+  #private
 
   def setup_row
     [Rook, Knight, Bishop, Queen, King, Bishop, Knight, Rook]
@@ -51,9 +55,17 @@ class Board
     @grid[0] = setup_row.map { |type| type.new(:black, self) }
     @grid[1].fill { Pawn.new(:black, self) }
     @grid[2..5].each { |row| row.fill(NullPiece.instance) }
-    @grid[1].fill { Pawn.new(:white, self) }
+    @grid[6].fill { Pawn.new(:white, self) }
     @grid[7] = setup_row.map { |type| type.new(:white, self) }
   end
 
+  def update_positions
+    @grid.each.with_index do |row, i|
+      row.each.with_index do |piece, j|
+        piece.pos = [i, j]
+      end
+    end
+  end
 
-end
+
+  end

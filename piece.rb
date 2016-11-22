@@ -1,11 +1,11 @@
 class Piece
   attr_reader :color, :symbol, :board
+  attr_accessor :pos
 
-  def initialize(color, board)
+  def initialize(color, board, pos = nil)
     @color = color
     @board = board
-    # TODO: remove this later, just for testing
-    @symbol = "P"
+    @pos = pos
   end
 
   def add_diff(start_pos, diff)
