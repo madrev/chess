@@ -144,6 +144,7 @@ class Pawn < Piece
 
     forward_diffs.each do |diff|
       new_pos = add_diff(start_pos, diff)
+      #combine this next & break into one break?
       next unless board.in_bounds?(new_pos)
       break unless board[new_pos].class == NullPiece
       result << new_pos

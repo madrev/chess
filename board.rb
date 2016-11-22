@@ -37,17 +37,22 @@ class Board
     self[start_pos] = nil
   end
 
-
-  #private
-
-  def populate_grid
-    @grid[0..1].each { |row| row.fill(Piece.new(:black, self)) }
-    @grid[2..5].each { |row| row.fill(NullPiece.instance) }
-    @grid[6..7].each { |row| row.fill(Piece.new(:white, self)) }
-  end
-
   def in_bounds?(pos)
     pos.is_a?(Array) && pos.all? { |x| (0..7).cover?(x) }
+  end
+
+  private
+
+  def setup_row
+    [Rook, Knight, Bishop, Queen, King, Bishop, Knight, Rook]
+  end
+
+  def populate_grid
+    @grid[0] = setup_row.map { |type| type.new(:black, self) }
+    @grid[1].fill { Pawn.new(:black, self) }
+    @grid[2..5].each { |row| row.fill(NullPiece.instance) }
+    @grid[1].fill { Pawn.new(:white, self) }
+    @grid[7] = setup_row.map { |type| type.new(:white, self) }
   end
 
 
