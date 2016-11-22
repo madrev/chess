@@ -1,3 +1,5 @@
+require 'singleton'
+
 class NullPiece < Piece
   include Singleton
 
@@ -5,6 +7,6 @@ class NullPiece < Piece
 
   def initialize
     @color = nil
-
+    @symbol = " "
   end
 end

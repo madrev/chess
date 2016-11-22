@@ -1,4 +1,5 @@
 require_relative 'piece'
+require_relative 'piece_modules'
 
 class Board
 
@@ -41,6 +42,7 @@ class Board
 
   def populate_grid
     @grid[0..1].each { |row| row.fill(Piece.new(:white, self)) }
+    @grid[2..5].each { |row| row.fill(NullPiece.instance) }
     @grid[6..7].each { |row| row.fill(Piece.new(:black, self)) }
   end
 

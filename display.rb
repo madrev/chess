@@ -2,10 +2,13 @@ require_relative 'board'
 require_relative 'cursor'
 require_relative 'piece'
 require_relative 'piece_modules'
+require_relative 'null_piece'
 require 'colorize'
+require 'yaml'
 
 class Display
-  attr_reader :cursor
+  #added :board for pry
+  attr_reader :cursor, :board
 
   def initialize(board = Board.new)
     @board = board
@@ -13,11 +16,7 @@ class Display
   end
 
   def display_space(pos)
-    if @board[pos].nil?
-      disp = "   "
-    else
-      disp = " #{@board[pos].symbol} "
-    end
+    disp = " #{@board[pos].symbol} "
 
     if @cursor.cursor_pos == pos
       if @cursor.selected == true
