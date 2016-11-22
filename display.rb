@@ -1,6 +1,7 @@
 require_relative 'board'
 require_relative 'cursor'
 require_relative 'piece'
+require_relative 'piece_modules'
 require 'colorize'
 
 class Display
@@ -15,7 +16,7 @@ class Display
     if @board[pos].nil?
       disp = "   "
     else
-      disp = " #{@board[pos].to_s} "
+      disp = " #{@board[pos].symbol} "
     end
 
     if @cursor.cursor_pos == pos
