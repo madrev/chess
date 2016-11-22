@@ -41,9 +41,9 @@ class Board
   #private
 
   def populate_grid
-    @grid[0..1].each { |row| row.fill(Piece.new(:white, self)) }
+    @grid[0..1].each { |row| row.fill(Piece.new(:black, self)) }
     @grid[2..5].each { |row| row.fill(NullPiece.instance) }
-    @grid[6..7].each { |row| row.fill(Piece.new(:black, self)) }
+    @grid[6..7].each { |row| row.fill(Piece.new(:white, self)) }
   end
 
   def in_bounds?(pos)

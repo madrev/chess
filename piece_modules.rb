@@ -1,6 +1,7 @@
 require_relative 'piece'
 require_relative 'board'
 require_relative 'null_piece'
+require 'byebug'
 
 
 module SlidingPiece
@@ -11,7 +12,7 @@ module SlidingPiece
       new_pos = add_diff(start_pos, diff)
       while @board.in_bounds?(new_pos)
         at_pos = board[new_pos]
-        result << new_pos if at_pos.color != self.color
+        result << new_pos if at_pos.opposite_color?(self)
         break unless at_pos.class == NullPiece
         new_pos = add_diff(new_pos, diff)
       end
@@ -29,7 +30,7 @@ module SteppingPiece
     move_diffs.each do |diff|
       new_pos = add_diff(start_pos, diff)
       at_pos = board[new_pos]
-      if @board.in_bounds?(new_pos) && at_pos.color != self.color
+      if @board.in_bounds?(new_pos) && at_pos.opposite_color?(self)
         result << new_pos
       end
     end
@@ -134,11 +135,20 @@ class Pawn < Piece
     #TODO: DRY this out
     result = []
     capture_diffs.each do |diff|
-      result << diff if board[add_diff(start_pos, diff)].class != NullPiece
+      new_pos = add_diff(start_pos, diff)
+      next unless board.in_bounds?(new_pos)
+      if board[new_pos].class != NullPiece && board[new_pos].opposite_color?(self)
+        result << new_pos
+      end
     end
+
     forward_diffs.each do |diff|
-      result << diff if board[add_diff(start_pos, diff)].class == NullPiece
+      new_pos = add_diff(start_pos, diff)
+      next unless board.in_bounds?(new_pos)
+      break unless board[new_pos].class == NullPiece
+      result << new_pos
     end
+    result.select {|pos| board.in_bounds?(pos)}
 
   end
 
