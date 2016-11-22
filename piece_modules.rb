@@ -30,7 +30,7 @@ module SteppingPiece
       new_pos = add_diff(start_pos, diff)
       at_pos = board[new_pos]
       if @board.in_bounds?(new_pos) && at_pos.color != self.color
-        result << new_pos 
+        result << new_pos
       end
     end
     result
@@ -111,10 +111,36 @@ class King < Piece
 end
 
 class Pawn < Piece
+  # TODO: toggle @moved when pawn is moved in play logic
 
   def initialize(color, board)
     super
     @symbol = "P"
+    @moved = false
   end
+
+  def forward_diffs
+    result = []
+    one_foward = (self.color == :white ? [-1, 0] : [1, 0])
+    result << one_foward
+    result << [one_foward[0]*2, 0]
+  end
+
+  def capture_diffs
+    self.color == :white ? [[-1,1], [-1,-1]] : [[1,1], [1,-1]]
+  end
+
+  def moves(start_pos)
+    #TODO: DRY this out
+    result = []
+    capture_diffs.each do |diff|
+      result << diff if board[add_diff(start_pos, diff)].class != NullPiece
+    end
+    forward_diffs.each do |diff|
+      result << diff if board[add_diff(start_pos, diff)].class == NullPiece
+    end
+
+  end
+
 
 end
