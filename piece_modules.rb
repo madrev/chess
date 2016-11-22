@@ -6,7 +6,7 @@ require 'byebug'
 
 module SlidingPiece
 
-  def moves(start_pos)
+  def moves(start_pos = @pos)
     result = []
     move_diffs.each do |diff|
       new_pos = add_diff(start_pos, diff)
@@ -25,7 +25,7 @@ end
 
 module SteppingPiece
 
-  def moves(start_pos)
+  def moves(start_pos = @pos)
     result = []
     move_diffs.each do |diff|
       new_pos = add_diff(start_pos, diff)
@@ -131,7 +131,7 @@ class Pawn < Piece
     self.color == :white ? [[-1,1], [-1,-1]] : [[1,1], [1,-1]]
   end
 
-  def moves(start_pos)
+  def moves(start_pos = @pos)
     #TODO: DRY this out
     result = []
     capture_diffs.each do |diff|
