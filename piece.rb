@@ -5,4 +5,8 @@ class Piece
     @color = color
   end
 
+  def to_s
+    "P"
+  end
+
 end

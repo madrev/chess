@@ -32,11 +32,12 @@ MOVES = {
 
 class Cursor
 
-  attr_reader :cursor_pos, :board
+  attr_reader :cursor_pos, :board, :selected
 
   def initialize(cursor_pos, board)
     @cursor_pos = cursor_pos
     @board = board
+    @selected = false
   end
 
   def get_input
@@ -76,8 +77,27 @@ class Cursor
   end
 
   def handle_key(key)
+    case key
+    when :return, :space
+      toggle_selected
+      @cursor_pos
+    when :left, :right, :up, :down
+      update_pos(MOVES[key])
+      nil
+    when :ctrl_c
+      Process.exit(0)
+    when :escape
+        # Just added this to be able to break from Display::go. Remove later?
+      true
+    end
   end
 
   def update_pos(diff)
+    new_pos = [@cursor_pos, diff].transpose.map { |x| x.inject(:+) }
+    @cursor_pos = new_pos if @board.in_bounds?(new_pos)
+  end
+
+  def toggle_selected
+    @selected = ( @selected ? false : true )
   end
 end

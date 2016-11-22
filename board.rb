@@ -1,5 +1,7 @@
+require_relative 'piece'
+
 class Board
-  require_relative 'piece'
+
   attr_reader :grid
 
   def initialize
@@ -18,8 +20,8 @@ class Board
   end
 
   def move_piece(start_pos, end_pos)
-    unless valid_pos?(start_pos) && valid_pos?(end_pos)
-      raise "Invalid position"
+    unless in_bounds?(start_pos) && in_bounds?(end_pos)
+      raise "Out of bounds!"
     end
 
     piece = self[start_pos]
@@ -42,7 +44,7 @@ class Board
     @grid[6..7].each { |row| row.fill(Piece.new(:black)) }
   end
 
-  def valid_pos?(pos)
+  def in_bounds?(pos)
     pos.is_a?(Array) && pos.all? { |x| (0..7).cover?(x) }
   end
 
