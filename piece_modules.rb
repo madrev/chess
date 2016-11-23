@@ -26,12 +26,13 @@ end
 module SteppingPiece
 
   def moves(start_pos = @pos)
+    #byebug
     result = []
     move_diffs.each do |diff|
       new_pos = add_diff(start_pos, diff)
-      at_pos = board[new_pos]
-      if @board.in_bounds?(new_pos) && at_pos.opposite_color?(self)
-        result << new_pos
+      if @board.in_bounds?(new_pos)
+        at_pos = @board[new_pos]
+        result << new_pos if at_pos.opposite_color?(self)
       end
     end
     result
@@ -42,7 +43,7 @@ end
 class Bishop < Piece
   include SlidingPiece
 
-  def initialize(color, board)
+  def initialize(color, board, pos = nil)
     super
     @symbol = "B"
   end
@@ -56,7 +57,7 @@ end
 class Rook < Piece
   include SlidingPiece
 
-  def initialize(color, board)
+  def initialize(color, board, pos = nil)
     super
     @symbol = "R"
   end
@@ -70,7 +71,7 @@ end
 class Queen < Piece
   include SlidingPiece
 
-  def initialize(color, board)
+  def initialize(color, board, pos = nil)
     super
     @symbol = "Q"
   end
@@ -85,7 +86,7 @@ end
 class Knight < Piece
   include SteppingPiece
 
-  def initialize(color, board)
+  def initialize(color, board, pos = nil)
     super
     @symbol = "N"
   end
@@ -100,7 +101,7 @@ end
 class King < Piece
   include SteppingPiece
 
-  def initialize(color, board)
+  def initialize(color, board, pos = nil)
     super
     @symbol = "K"
   end
@@ -114,7 +115,7 @@ end
 class Pawn < Piece
   # TODO: toggle @moved when pawn is moved in play logic
 
-  def initialize(color, board)
+  def initialize(color, board, pos = nil)
     super
     @symbol = "P"
     @moved = false

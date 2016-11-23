@@ -43,6 +43,17 @@ class Board
   end
 
   def in_check?(color)
+    king = @grid.flatten.find {|piece| piece.class == King && piece.color == color}
+    all_pieces = @grid.flatten.select {|piece| piece.class != NullPiece}
+    all_pieces.any? do |piece|
+      begin
+      piece.opposite_color?(king) &&
+      piece.moves.include?(king.pos)
+
+      rescue
+      puts "#{piece.color} #{piece.class} is fucked"
+    end
+    end
   end
 
   #private
