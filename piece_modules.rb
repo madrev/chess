@@ -20,7 +20,6 @@ module SlidingPiece
     result
   end
 
-
 end
 
 module SteppingPiece

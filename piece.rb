@@ -1,6 +1,6 @@
 class Piece
   attr_reader :color, :symbol, :board
-  attr_accessor :pos
+  attr_accessor :pos, :board
 
   def initialize(color, board, pos = nil)
     @color = color
@@ -14,6 +14,9 @@ class Piece
 
   def opposite_color?(piece2)
     @color == :white ? piece2.color == :black : piece2.color == :white
+  end
+
+  def valid_moves
   end
 
 end

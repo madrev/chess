@@ -38,25 +38,45 @@ class Board
     self[start_pos] = nil
   end
 
+
+
+  def dup
+    result = Board.new
+    result.grid = Board.deep_dup(@grid)
+    result.grid.flatten.each do |piece|
+      piece.board = result
+    end
+    result
+  end
+
   def in_bounds?(pos)
     pos.is_a?(Array) && pos.all? { |x| (0..7).cover?(x) }
   end
 
+  def all_pieces
+    @grid.flatten.select {|piece| piece.class != NullPiece}
+  end
+
   def in_check?(color)
     king = @grid.flatten.find {|piece| piece.class == King && piece.color == color}
-    all_pieces = @grid.flatten.select {|piece| piece.class != NullPiece}
     all_pieces.any? do |piece|
-      begin
       piece.opposite_color?(king) &&
       piece.moves.include?(king.pos)
-
-      rescue
-      puts "#{piece.color} #{piece.class} is fucked"
-    end
     end
   end
 
+  def checkmate?(color)
+    in_check?(color) && all_pieces.none? {|piece|}
+    all_pieces.none? {|piece| piece.color == color && piece.valid_moves.size > 0}
+  end
   #private
+  attr_writer :grid
+
+  def self.deep_dup(obj)
+    return obj if obj.is_a?(NullPiece)
+    return obj.dup unless obj.is_a?(Array)
+    obj.map {|el| deep_dup(el)}
+  end
 
   def setup_row
     [Rook, Knight, Bishop, Queen, King, Bishop, Knight, Rook]
