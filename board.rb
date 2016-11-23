@@ -29,22 +29,22 @@ class Board
     piece = self[start_pos]
     raise "No piece there!" if piece.nil?
 
-    destination_piece = self[end_pos]
-    if destination_piece && destination_piece.color == piece.color
-      raise "#{piece.color} piece there"
-    end
+    # destination_piece = self[end_pos]
+    # if destination_piece && destination_piece.color == piece.color
+    #   raise "#{piece.color} piece there"
+    # end
 
     self[end_pos] = piece
-    self[start_pos] = nil
+    piece.pos = end_pos
+    self[start_pos] = NullPiece.instance
   end
-
-
 
   def dup
     result = Board.new
     result.grid = Board.deep_dup(@grid)
     result.grid.flatten.each do |piece|
       piece.board = result
+      piece.pos = piece.pos.dup
     end
     result
   end

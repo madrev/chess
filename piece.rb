@@ -16,7 +16,14 @@ class Piece
     @color == :white ? piece2.color == :black : piece2.color == :white
   end
 
+  def move_into_check?(end_pos)
+    test_board = @board.dup
+    test_board.move_piece(@pos, end_pos)
+    test_board.in_check?(@color)
+  end
+
   def valid_moves
+    moves.reject { |move| move_into_check?(move) }
   end
 
 end
