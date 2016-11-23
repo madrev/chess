@@ -60,11 +60,13 @@ class Display
 
   def show_debug(pos)
     piece = board[pos]
-    print "\n"
-    puts "This piece is a #{piece.color} #{piece.class}"
-    puts "Valid moves are #{piece.valid_moves.to_s}"
-    if board.in_check?(piece.color)
-      puts "#{piece.color} is in check!"
+    if piece.class != NullPiece
+      print "\n"
+      puts "This piece is a #{piece.color} #{piece.class}"
+      puts "Valid moves are #{piece.valid_moves.to_s}"
+      if board.in_check?(piece.color)
+        puts "#{piece.color} is in check!"
+      end
     end
   end
 

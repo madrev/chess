@@ -31,7 +31,7 @@ module SteppingPiece
       new_pos = add_diff(start_pos, diff)
       if @board.in_bounds?(new_pos)
         at_pos = @board[new_pos]
-        result << new_pos if at_pos.opposite_color?(self)
+        result << new_pos if at_pos.opposite_color?(self) || at_pos.class == NullPiece
       end
     end
     result

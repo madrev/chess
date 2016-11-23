@@ -22,17 +22,22 @@ class Board
   end
 
   def move_piece(start_pos, end_pos)
+    if self[start_pos].move_into_check?(end_pos)
+      raise "That move leaves you in check!"
+    elsif self[start_pos].valid_moves.include?(end_pos)
+      move_piece!(start_pos, end_pos)
+    else
+      raise "Invalid move, sorry"
+    end
+  end
+
+  def move_piece!(start_pos, end_pos)
+    #TODO: figure out whether these exceptions are needed
     unless in_bounds?(start_pos) && in_bounds?(end_pos)
       raise "Out of bounds!"
     end
-
     piece = self[start_pos]
     raise "No piece there!" if piece.nil?
-
-    # destination_piece = self[end_pos]
-    # if destination_piece && destination_piece.color == piece.color
-    #   raise "#{piece.color} piece there"
-    # end
 
     self[end_pos] = piece
     piece.pos = end_pos
