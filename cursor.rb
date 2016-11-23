@@ -88,7 +88,7 @@ class Cursor
       Process.exit(0)
     when :escape
         # Just added this to be able to break from Display::go. Remove later?
-      true
+      :escape
     end
   end
 

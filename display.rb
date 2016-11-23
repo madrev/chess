@@ -9,10 +9,12 @@ require 'yaml'
 class Display
   #added :board for pry
   attr_reader :cursor, :board
+  attr_accessor :debug
 
   def initialize(board = Board.new)
     @board = board
     @cursor = Cursor.new([0,0], @board)
+    @debug = false
   end
 
   def display_space(pos)
@@ -42,9 +44,27 @@ class Display
   end
 
   def go
+    last_return = nil
     while true
       self.render
-      break if @cursor.get_input
+      if @debug == true && last_return
+        show_debug(last_return)
+        last_return = nil
+      end
+      input_return = @cursor.get_input
+      break if input_return == :escape
+      last_return = input_return
+
+    end
+  end
+
+  def show_debug(pos)
+    piece = board[pos]
+    print "\n"
+    puts "This piece is a #{piece.color} #{piece.class}"
+    puts "Valid moves are #{piece.valid_moves.to_s}"
+    if board.in_check?(piece.color)
+      puts "#{piece.color} is in check!"
     end
   end
 
