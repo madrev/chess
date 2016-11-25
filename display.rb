@@ -20,12 +20,10 @@ class Display
   def display_space(pos)
     disp = " #{@board[pos].symbol} "
 
-    if @cursor.cursor_pos == pos
-      if @cursor.selected == true
-        print disp.colorize(:color => :white, :background => :magenta)
-      else
+    if pos == board.last_selected
+      print disp.colorize(:color => :white, :background => :magenta)
+    elsif @cursor.cursor_pos == pos
         print disp.colorize(:color => :white, :background => :light_blue)
-      end
     else
       print disp
     end
@@ -44,16 +42,24 @@ class Display
   end
 
   def go
-    last_return = nil
+    # last_return = nil
     while true
       self.render
-      if @debug == true && last_return
-        show_debug(last_return)
-        last_return = nil
-      end
+      # if @debug == true && last_return
+      #   show_debug(last_return)
+      #   last_return = nil
+      # end
       input_return = @cursor.get_input
-      break if input_return == :escape
-      last_return = input_return
+
+      case input_return
+      when :escape
+          break
+      when nil
+        next
+      else
+        board.last_selected = input_return
+      end
+
 
     end
   end

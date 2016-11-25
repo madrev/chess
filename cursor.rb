@@ -77,9 +77,10 @@ class Cursor
   end
 
   def handle_key(key)
+    #TODO: figure out how to un-select something
     case key
     when :return, :space
-      toggle_selected
+      #toggle_selected
       @cursor_pos
     when :left, :right, :up, :down
       update_pos(MOVES[key])
@@ -92,10 +93,13 @@ class Cursor
     end
   end
 
+  private
+
   def update_pos(diff)
     new_pos = [@cursor_pos, diff].transpose.map { |x| x.inject(:+) }
     @cursor_pos = new_pos if @board.in_bounds?(new_pos)
   end
+
 
   def toggle_selected
     @selected = ( @selected ? false : true )
