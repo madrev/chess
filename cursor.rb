@@ -83,7 +83,7 @@ class Cursor
       if board.selected == cursor_pos
         return @cursor_pos
       else
-      board.selected == @cursor_pos ? clear_selected
+      board.selected.nil ? clear_selected
     when :left, :right, :up, :down
       update_pos(MOVES[key])
       nil

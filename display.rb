@@ -56,9 +56,9 @@ class Display
           break
       when nil
         next
-      else
-        board.last_selected = input_return
-      end
+      # else
+      #   board.last_selected = input_return
+      # end
 
 
     end
