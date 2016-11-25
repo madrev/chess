@@ -80,8 +80,10 @@ class Cursor
     #TODO: figure out how to un-select something
     case key
     when :return, :space
-      #toggle_selected
-      @cursor_pos
+      if board.selected == cursor_pos
+        return @cursor_pos
+      else
+      board.selected == @cursor_pos ? clear_selected
     when :left, :right, :up, :down
       update_pos(MOVES[key])
       nil
@@ -101,7 +103,11 @@ class Cursor
   end
 
 
-  def toggle_selected
-    @selected = ( @selected ? false : true )
+  def update_selected(pos)
+    board.selected.nil? ? board.selected
+  end
+
+  def clear_selected
+    board.selected = nil
   end
 end

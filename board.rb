@@ -4,13 +4,13 @@ require_relative 'piece_modules'
 class Board
 
   attr_reader :grid
-  attr_accessor :last_selected
+  attr_accessor :selected
 
   def initialize
     @grid = Array.new(8) { Array.new(8) }
     populate_grid
     update_positions
-    @last_selected = nil
+    @selected = nil
   end
 
   def [](pos)
