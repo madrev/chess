@@ -42,13 +42,12 @@ class Display
   end
 
   def go
-    # last_return = nil
     while true
       self.render
-      # if @debug == true && last_return
-      #   show_debug(last_return)
-      #   last_return = nil
-      # end
+
+      if @debug == true && board.selected != nil
+        show_debug(board.selected)
+      end
       input_return = @cursor.get_input
 
       case input_return
@@ -56,12 +55,10 @@ class Display
           break
       when nil
         next
-      # else
-      #   board.last_selected = input_return
-      # end
-
-
+      else
+        return input_return
     end
+
   end
 
   def show_debug(pos)

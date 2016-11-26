@@ -28,6 +28,7 @@ class Board
       raise "That move leaves you in check!"
     elsif self[start_pos].valid_moves.include?(end_pos)
       move_piece!(start_pos, end_pos)
+      @selected = nil
     else
       raise "Invalid move, sorry"
     end

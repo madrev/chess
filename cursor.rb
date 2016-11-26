@@ -81,9 +81,9 @@ class Cursor
     case key
     when :return, :space
       if board.selected == cursor_pos
-        return @cursor_pos
+        clear_selected
       else
-      board.selected.nil ? clear_selected
+      board.selected.nil ? update_selected : return @cursor_pos
     when :left, :right, :up, :down
       update_pos(MOVES[key])
       nil
