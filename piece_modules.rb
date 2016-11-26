@@ -5,6 +5,7 @@ require 'byebug'
 
 
 module SlidingPiece
+  #TODO: black sliding pieces aren't working. whyyyyy
 
   def moves(start_pos = @pos)
     result = []

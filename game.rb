@@ -42,3 +42,13 @@ end
 def switch_players!
   @current_player = (@current_player == @player1 ? @player2 : @player1)
 end
+
+if __FILE__ == $PROGRAM_NAME
+  puts "What's the name of the first player?"
+  name1 = gets.chomp
+  puts "What's the name of the second player?"
+  name2 = gets.chomp
+
+  game = ChessGame.new(name1,name2)
+  game.play
+end
