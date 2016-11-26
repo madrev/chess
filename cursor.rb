@@ -77,22 +77,30 @@ class Cursor
   end
 
   def handle_key(key)
-    #TODO: figure out how to un-select something
+
     case key
     when :return, :space
       if board.selected == cursor_pos
         clear_selected
+      elsif @board.selected.nil?
+        update_selected(@cursor_pos)
+        return nil
       else
-      board.selected.nil ? update_selected : return @cursor_pos
+        return @cursor_pos
+      end
+
     when :left, :right, :up, :down
       update_pos(MOVES[key])
       nil
+
     when :ctrl_c
       Process.exit(0)
+
     when :escape
         # Just added this to be able to break from Display::go. Remove later?
       :escape
     end
+
   end
 
   private
@@ -104,7 +112,8 @@ class Cursor
 
 
   def update_selected(pos)
-    board.selected.nil? ? board.selected
+    raise "Selection already made" unless board.selected.nil?
+    board.selected = pos if board[pos].class != NullPiece
   end
 
   def clear_selected

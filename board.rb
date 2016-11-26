@@ -1,5 +1,6 @@
 require_relative 'piece'
 require_relative 'piece_modules'
+require_relative 'player'
 
 class Board
 
@@ -23,9 +24,11 @@ class Board
     @grid[row][col] = val
   end
 
-  def move_piece(start_pos, end_pos)
+  def move_piece(start_pos, end_pos, player)
     if self[start_pos].move_into_check?(end_pos)
       raise "That move leaves you in check!"
+    elsif self[start_pos].color != player.color
+      raise "That's not your piece! Try again."
     elsif self[start_pos].valid_moves.include?(end_pos)
       move_piece!(start_pos, end_pos)
       @selected = nil

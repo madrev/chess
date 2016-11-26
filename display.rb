@@ -14,16 +14,17 @@ class Display
   def initialize(board = Board.new)
     @board = board
     @cursor = Cursor.new([0,0], @board)
-    @debug = false
+    @debug = true
   end
 
   def display_space(pos)
+    #TODO: make different colored pieces different colors
     disp = " #{@board[pos].symbol} "
 
-    if pos == board.last_selected
+    if pos == board.selected
       print disp.colorize(:color => :white, :background => :magenta)
     elsif @cursor.cursor_pos == pos
-        print disp.colorize(:color => :white, :background => :light_blue)
+      print disp.colorize(:color => :white, :background => :light_blue)
     else
       print disp
     end
@@ -34,7 +35,7 @@ class Display
     system("clear")
     @board.grid.each_index do |i|
       @board.grid[i].each_index do |j|
-        display_space([i,j])
+        display_space([i, j])
       end
       print "\n"
     end
@@ -45,31 +46,33 @@ class Display
     while true
       self.render
 
-      if @debug == true && board.selected != nil
+      if @debug == true && !board.selected.nil?
         show_debug(board.selected)
       end
-      input_return = @cursor.get_input
 
-      case input_return
-      when :escape
-          break
-      when nil
+      input_return = @cursor.get_input
+      break if input_return == :escape
+
+      if input_return.nil?
         next
       else
         return input_return
-    end
+      end
 
+    end
   end
+
 
   def show_debug(pos)
     piece = board[pos]
     if piece.class != NullPiece
       print "\n"
       puts "This piece is a #{piece.color} #{piece.class}"
-      puts "Valid moves are #{piece.valid_moves.to_s}"
+      puts "Valid moves are #{piece.valid_moves}"
       if board.in_check?(piece.color)
         puts "#{piece.color} is in check!"
       end
+      puts "Pick a place to move to!"
     end
   end
 
