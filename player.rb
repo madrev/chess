@@ -10,10 +10,14 @@ class HumanPlayer
   def get_move
     #TODO: refactor this into two separate methods, get_selection and get_move. Maybe?
     system("clear")
-    puts "Your turn, #{@name}!"
+    puts "Your turn, #{@name}! Move the #{display_color} pieces."
     sleep(1)
     move_to = @game.display.go
     [@game.board.selected, move_to]
+  end
+
+  def display_color
+    @color == :white ? "green" : "blue"
   end
 
 

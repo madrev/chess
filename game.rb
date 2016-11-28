@@ -17,15 +17,23 @@ class ChessGame
     while true
       play_turn
       switch_players!
-
-      [:white, :black].each do |color|
-        if @board.checkmate(color)
-          puts "Checkmate! #{color} has lost"
-          return :color
-        end
+      if !winner.nil?
+        puts "Checkmate! #{winner.name} has won."
+        return true
       end
     end
 
+  end
+
+  private
+
+  def winner
+    [@player1, @player2].each do |player|
+      if @board.checkmate?(player.color)
+        return (player == @player1 ? @player2 : @player1)
+      end
+    end
+    nil
   end
 
   def play_turn
@@ -39,6 +47,7 @@ class ChessGame
     @board.selected = nil
     retry
     end
+
   end
 
   def switch_players!

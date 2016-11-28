@@ -20,7 +20,10 @@ class Display
 
   def render
     system("clear")
+    puts "     0  1  2  3  4  5  6  7 "
+    puts "----------------------------"
     @board.grid.each_index do |i|
+      print (i.to_s + " | ")
       @board.grid[i].each_index do |j|
         display_space([i, j])
       end
@@ -87,7 +90,7 @@ class Display
     piece = board[pos]
     if piece.class != NullPiece
       print "\n"
-      puts "This piece is a #{piece.color} #{piece.class}"
+      puts "This piece is a #{piece.color} #{piece.class.to_s.downcase}"
       puts "Valid moves are #{piece.valid_moves}"
       if board.in_check?(piece.color)
         puts "#{piece.color} is in check!"
