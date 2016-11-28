@@ -66,8 +66,9 @@ class Board
     pos.is_a?(Array) && pos.all? { |x| (0..7).cover?(x) }
   end
 
-  def all_pieces
-    @grid.flatten.select {|piece| piece.class != NullPiece}
+  def all_pieces(color = nil)
+    all = @grid.flatten.select {|piece| piece.class != NullPiece}
+    color.nil? ? all.select {|piece| piece.color == color } : all
   end
 
   def in_check?(color)
@@ -79,9 +80,10 @@ class Board
   end
 
   def checkmate?(color)
-    in_check?(color) && all_pieces.none? {|piece|}
-    all_pieces.none? {|piece| piece.color == color && piece.valid_moves.size > 0}
+    in_check?(color) &&
+    all_pieces(color).none? {|piece| piece.valid_moves.size > 0}
   end
+
   #private
   attr_writer :grid
 
