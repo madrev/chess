@@ -5,7 +5,6 @@ require 'byebug'
 
 
 module SlidingPiece
-  #TODO: black sliding pieces aren't working. whyyyyy
 
   def moves(start_pos = @pos)
     result = []
@@ -16,6 +15,7 @@ module SlidingPiece
         if at_pos.opposite_color?(self) || at_pos.class == NullPiece
           result << new_pos
         end
+
         break unless at_pos.class == NullPiece
         new_pos = add_diff(new_pos, diff)
       end

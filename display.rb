@@ -17,19 +17,9 @@ class Display
     @debug = true
   end
 
-  def display_space(pos)
-    #TODO: make different colored pieces different colors
-    disp = " #{@board[pos].symbol} "
 
-    if pos == board.selected
-      print disp.colorize(:color => :white, :background => :magenta)
-    elsif @cursor.cursor_pos == pos
-      print disp.colorize(:color => :white, :background => :light_blue)
-    else
-      print disp
-    end
-    nil
-  end
+
+
 
   def render
     system("clear")
@@ -76,5 +66,36 @@ class Display
     end
   end
 
+  private
+  def display_space(pos)
+    #TODO: make different colored pieces different colors
+    disp = " #{@board[pos].symbol} "
+
+    if pos == board.selected
+      print_selected_disp(disp)
+    elsif @cursor.cursor_pos == pos
+      print_cursor_disp(disp)
+    else
+      print_piece_disp(disp, board[pos].color)
+    end
+    nil
+  end
+
+  def print_selected_disp(disp)
+    print disp.colorize(:color => :black, :background => :magenta)
+  end
+
+  def print_cursor_disp(disp)
+    print disp.colorize(:color => :black, :background => :light_cyan)
+  end
+
+  def print_piece_disp(disp, color)
+    if color == :black
+      print disp.colorize(:color => :blue)
+    elsif color == :white
+      print disp.colorize(:color => :green)
+    else print disp
+    end
+  end
 
 end

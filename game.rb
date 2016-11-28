@@ -41,6 +41,7 @@ end
 
 def switch_players!
   @current_player = (@current_player == @player1 ? @player2 : @player1)
+  @board.selected = nil
 end
 
 if __FILE__ == $PROGRAM_NAME
