@@ -67,8 +67,8 @@ class Board
   end
 
   def all_pieces(color = nil)
-    all = @grid.flatten.select {|piece| piece.class != NullPiece}
-    color.nil? ? all.select {|piece| piece.color == color } : all
+    pieces = @grid.flatten.select {|piece| piece.class != NullPiece}
+    color.nil? ? pieces : pieces.select {|piece| piece.color == color }
   end
 
   def in_check?(color)
