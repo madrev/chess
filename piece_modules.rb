@@ -115,6 +115,7 @@ class King < Piece
 end
 
 class Pawn < Piece
+  attr_accessor :moved
   # TODO: toggle @moved when pawn is moved in play logic
 
   def initialize(color, board, pos = nil)
@@ -125,9 +126,10 @@ class Pawn < Piece
 
   def forward_diffs
     result = []
-    one_foward = (self.color == :white ? [-1, 0] : [1, 0])
-    result << one_foward
-    result << [one_foward[0]*2, 0]
+    one_forward = (self.color == :white ? [-1, 0] : [1, 0])
+    result << one_forward
+    result << [one_forward[0]*2, 0] if @moved == false
+    result
   end
 
   def capture_diffs

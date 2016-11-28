@@ -15,34 +15,40 @@ class ChessGame
 
   def play
     while true
-      begin
-      from_pos, to_pos = @current_player.get_move
-      @board.move_piece(from_pos, to_pos, @current_player)
-
-      rescue => error
-      puts error
-      sleep(1.5)
-      @board.selected = nil
-      retry
-      end
-
+      play_turn
       switch_players!
-    end
 
-    [:white, :black].each do |color|
-      if @board.checkmate(color)
-        puts "Checkmate! #{color} has lost"
-        return :color
+      [:white, :black].each do |color|
+        if @board.checkmate(color)
+          puts "Checkmate! #{color} has lost"
+          return :color
+        end
       end
     end
+
+  end
+
+  def play_turn
+    begin
+    from_pos, to_pos = @current_player.get_move
+    @board.move_piece(from_pos, to_pos, @current_player)
+
+    rescue => error
+    puts error
+    sleep(1.5)
+    @board.selected = nil
+    retry
+    end
+  end
+
+  def switch_players!
+    @current_player = (@current_player == @player1 ? @player2 : @player1)
+    @board.selected = nil
   end
 
 end
 
-def switch_players!
-  @current_player = (@current_player == @player1 ? @player2 : @player1)
-  @board.selected = nil
-end
+
 
 if __FILE__ == $PROGRAM_NAME
   puts "What's the name of the first player?"

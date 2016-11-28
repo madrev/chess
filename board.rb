@@ -47,7 +47,9 @@ class Board
 
     self[end_pos] = piece
     piece.pos = end_pos
+    piece.moved = true if piece.is_a?(Pawn)
     self[start_pos] = NullPiece.instance
+
   end
 
   def dup

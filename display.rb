@@ -18,9 +18,6 @@ class Display
   end
 
 
-
-
-
   def render
     system("clear")
     @board.grid.each_index do |i|
@@ -53,22 +50,10 @@ class Display
   end
 
 
-  def show_debug(pos)
-    piece = board[pos]
-    if piece.class != NullPiece
-      print "\n"
-      puts "This piece is a #{piece.color} #{piece.class}"
-      puts "Valid moves are #{piece.valid_moves}"
-      if board.in_check?(piece.color)
-        puts "#{piece.color} is in check!"
-      end
-      puts "Pick a place to move to!"
-    end
-  end
+
 
   private
   def display_space(pos)
-    #TODO: make different colored pieces different colors
     disp = " #{@board[pos].symbol} "
 
     if pos == board.selected
@@ -95,6 +80,19 @@ class Display
     elsif color == :white
       print disp.colorize(:color => :green)
     else print disp
+    end
+  end
+
+  def show_debug(pos)
+    piece = board[pos]
+    if piece.class != NullPiece
+      print "\n"
+      puts "This piece is a #{piece.color} #{piece.class}"
+      puts "Valid moves are #{piece.valid_moves}"
+      if board.in_check?(piece.color)
+        puts "#{piece.color} is in check!"
+      end
+      puts "Pick a place to move to!"
     end
   end
 
