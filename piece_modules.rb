@@ -13,7 +13,9 @@ module SlidingPiece
       new_pos = add_diff(start_pos, diff)
       while @board.in_bounds?(new_pos)
         at_pos = board[new_pos]
-        result << new_pos if at_pos.opposite_color?(self)
+        if at_pos.opposite_color?(self) || at_pos.class == NullPiece
+          result << new_pos
+        end
         break unless at_pos.class == NullPiece
         new_pos = add_diff(new_pos, diff)
       end
