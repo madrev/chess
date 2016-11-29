@@ -32,10 +32,10 @@ class Display
     nil
   end
 
-  def go
+  def go(name, display_color)
     while true
       self.render
-
+      puts "\nYour turn, #{name}! Move the #{display_color} pieces."
       if @debug == true && !board.selected.nil?
         show_debug(board.selected)
       end

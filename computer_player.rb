@@ -8,8 +8,10 @@ class ComputerPlayer
   end
 
   def get_move
-    puts "#{@name} is moving..."
-    sleep(1.5)
+    system("clear")
+    @game.display.render
+    puts "\n#{@name} is moving..."
+    sleep(1)
     my_pieces = @game.board.all_pieces(@color)
     possible_movers = my_pieces.reject {|piece| piece.valid_moves.empty?}
 
@@ -24,7 +26,6 @@ class ComputerPlayer
 
   private
   def possible_captures(pieces)
-    #TODO: debug argument error
     result = []
     pieces.each do |piece|
       piece.valid_moves.each do |end_pos|
