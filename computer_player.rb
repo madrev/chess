@@ -11,17 +11,29 @@ class ComputerPlayer
     puts "#{@name} is moving..."
     sleep(1.5)
     my_pieces = @game.board.all_pieces(@color)
-    print my_pieces.map {|piece| piece.pos}
-    move_from = my_pieces.reject {|piece| piece.valid_moves.empty?}.sample.pos
+    possible_movers = my_pieces.reject {|piece| piece.valid_moves.empty?}
 
-    move_to = @game.board[move_from].valid_moves.sample
-    #TODO: fix up logic so player captures when possible
-
-    # possible_captures = possible_moves.select {|pos| @game.board[pos].class != NullPiece}
-    # move_to = (possible_captures.empty? ? possible_moves.sample : possible_captures.sample)
-
-    [move_from, move_to]
+    if !possible_captures(possible_movers).empty?
+      return possible_captures(possible_movers).sample
+    else
+      move_from = possible_movers.sample.pos
+      move_to = @game.board[move_from].valid_moves.sample
+      return [move_from, move_to]
+    end
   end
+
+  private
+  def possible_captures(pieces)
+    #TODO: debug argument error
+    result = []
+    pieces.each do |piece|
+      piece.valid_moves.each do |end_pos|
+        result << [piece.pos, end_pos] if @game.board[end_pos].class != NullPiece
+      end
+    end
+    result
+  end
+
 
 
 end
